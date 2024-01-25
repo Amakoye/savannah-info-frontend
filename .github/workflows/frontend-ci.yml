@@ -41,38 +41,29 @@ jobs:
         run: yarn test
         
 
-  # deploy-to-vercel:
-  #   needs: lint-and-test
-  #   runs-on: ubuntu-latest
-  #   if: github.event.ref == 'refs/heads/production'
+  deploy-to-vercel:
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/production' || github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'production' }}
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
 
-  #     - name: Remove node_modules and yarn.lock
-  #       run: |
-  #         rm -rf node_modules
-  #         rm -f yarn.lock
-  #       
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Clear Yarn Cache
-  #       run: yarn cache clean
-  #       
+      - name: Remove node_modules and yarn.lock
+        run: |
+          rm -rf node_modules
+          rm -f yarn.lock
+        
 
-  #     - name: Set Environment Variable
-  #       run: echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}" >> .env
-  #       
+      - name: Clear Yarn Cache
+        run: yarn cache clean
+        
 
-  #     - name: Run Build
-  #       run: |
-  #         yarn install
-  #         yarn build
-  #       working-directory: ./frontend/
-
-  #     - uses: amondnet/vercel-action@v20
-  #       with:
-  #         vercel-token: ${{ secrets.VERCEL_TOKEN }}
-  #         vercel-args: "--prod"
-  #         vercel-org-id: ${{ secrets.ORG_ID }}
-  #         vercel-project-id: ${{ secrets.PROJECT_ID }}
+      - uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-args: "--prod"
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
