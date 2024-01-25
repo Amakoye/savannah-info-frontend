@@ -1,7 +1,6 @@
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import Image from "components/Image";
 import NextLink from "components/NextLink";
 import useResponsive from "hooks/useResponsive";
 import { poppins } from "theme/fonts";
@@ -28,7 +27,7 @@ const AuthLayout: FunctionComponent<AuthLayoutProps> = ({
     <RootStyles container>
       {!!isLg && (
         <LeftPanel item xs={0} lg={8}>
-          <Image {...{ src }} />
+          <Typography variant="subtitle1">Welcome. This is a simple application for a technical assessment. Built with NextJs and Django</Typography>
         </LeftPanel>
       )}
       <RightPanel item xs={12} sm={12} md={12} lg={4}>
