@@ -1,0 +1,81 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+      - development
+      - production
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.17.0
+
+      - name: Navigate to frontend folder
+        run: cd frontend/
+
+      - name: Remove node_modules and yarn.lock
+        run: |
+          rm -rf node_modules
+          rm -f yarn.lock
+        working-directory: frontend/
+
+      - name: Clear Yarn Cache
+        run: yarn cache clean
+        working-directory: frontend/
+
+      - name: Install dependencies
+        run: yarn install
+        working-directory: frontend/
+
+      - name: Run linting
+        run: yarn lint
+        working-directory: frontend/
+
+      - name: Run tests
+        run: yarn test
+        working-directory: frontend/
+
+  # deploy-to-vercel:
+  #   needs: lint-and-test
+  #   runs-on: ubuntu-latest
+  #   if: github.event.ref == 'refs/heads/production'
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+
+  #     - name: Remove node_modules and yarn.lock
+  #       run: |
+  #         rm -rf node_modules
+  #         rm -f yarn.lock
+  #       working-directory: frontend/
+
+  #     - name: Clear Yarn Cache
+  #       run: yarn cache clean
+  #       working-directory: frontend/
+
+  #     - name: Set Environment Variable
+  #       run: echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}" >> .env
+  #       working-directory: frontend/
+
+  #     - name: Run Build
+  #       run: |
+  #         yarn install
+  #         yarn build
+  #       working-directory: ./frontend/
+
+  #     - uses: amondnet/vercel-action@v20
+  #       with:
+  #         vercel-token: ${{ secrets.VERCEL_TOKEN }}
+  #         vercel-args: "--prod"
+  #         vercel-org-id: ${{ secrets.ORG_ID }}
+  #         vercel-project-id: ${{ secrets.PROJECT_ID }}
