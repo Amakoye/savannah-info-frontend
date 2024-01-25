@@ -19,30 +19,27 @@ jobs:
         with:
           node-version: 18.17.0
 
-      - name: Navigate to frontend folder
-        run: cd frontend/
-
       - name: Remove node_modules and yarn.lock
         run: |
           rm -rf node_modules
           rm -f yarn.lock
-        working-directory: frontend/
+        
 
       - name: Clear Yarn Cache
         run: yarn cache clean
-        working-directory: frontend/
+        
 
       - name: Install dependencies
         run: yarn install
-        working-directory: frontend/
+        
 
       - name: Run linting
         run: yarn lint
-        working-directory: frontend/
+        
 
       - name: Run tests
         run: yarn test
-        working-directory: frontend/
+        
 
   # deploy-to-vercel:
   #   needs: lint-and-test
@@ -57,15 +54,15 @@ jobs:
   #       run: |
   #         rm -rf node_modules
   #         rm -f yarn.lock
-  #       working-directory: frontend/
+  #       
 
   #     - name: Clear Yarn Cache
   #       run: yarn cache clean
-  #       working-directory: frontend/
+  #       
 
   #     - name: Set Environment Variable
   #       run: echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}" >> .env
-  #       working-directory: frontend/
+  #       
 
   #     - name: Run Build
   #       run: |
