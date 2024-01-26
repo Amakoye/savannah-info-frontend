@@ -47,9 +47,9 @@ const AlbumPage: NextPageWithLayout = () => {
 
   return (
     <Stack alignItems={"center"}>
-      {loading ? (
+      {_loading ? (
         <CircularProgress />
-      ) : loading === "error" ? (
+      ) : _loading === "error" ? (
         <Typography>Error occured while fetching Data</Typography>
       ) : (
         <Box width={"100%"}>

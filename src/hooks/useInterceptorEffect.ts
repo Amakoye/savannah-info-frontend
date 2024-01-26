@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 import memoize from "fast-memoize";
 import { useEffect } from "react";
 import { useDispatch } from "store";
+import { reduxLogoutUser } from "store/actions/auth";
 import useAuth from "./useAuth";
 
 const memoizedReduxLogoutUser = memoize((_: string) =>
@@ -54,6 +55,3 @@ declare module "axios" {
   }
 }
 export default useInterceptorEffect;
-function reduxLogoutUser(): any {
-  throw new Error("Function not implemented.");
-}

@@ -39,7 +39,9 @@ const PhotoCard: FC<PhotoCardProps> = ({ title, image_url, id }) => {
               <img
                 style={{
                   height: "100%",
+                  objectFit: "cover",
                   width: "100%",
+                  borderRadius: 10,
                 }}
                 src={image_url}
                 alt={title}
