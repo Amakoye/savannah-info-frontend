@@ -1,40 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is the frontend part of the technical assessment. In as much as it did deploy successfully, I advise using it locally for the purpose of interacting with backend, for the following reason;
+ - The backend service provides resources over HTTP, and the frontend content such as initial pages are loaded over HTTPS connection. This is blocked by the browser causing a mixed content error.
+ - Well the issue can be resolved by loading all resources over a secure HTTPS connection; but for my case I dont have a domain that I can use to map to  my server public ip; and for this reason I am access my backend service via htpp://public_server_ip/api/
+ I did develop my backend service using django and django restframework, the service is hosted on an aws ec2 instance.
 
-## Getting Started
+ It was my great desire to provide all the code(frontend, and backend) under one repository but some issues with github actions used for deployment of the frontend app made me to resolve to creating a repo specifically for the frontend code. I'll provide the link to the initial repo containing the backend code and the setups to setup it up.
 
-First, run the development server:
+ For the sake of this tenchical assesment, I'll have my env file with the API address in this repo.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+ ## Getting started
+  - Clone the frontend repo using this link https://github.com/Amakoye/savannah-info-frontend.git
+  - Inside the root project directory Run ``` yarn install``` or ```npm install``` to install dependencies
+  - Run ```yarn dev``` or ```npm run dev``` to start the development server, the app will run on  http://localhost:4200
+  - Run ```yarn build && yarn start``` or ```npm run build && npm  start``` to run the app in production mode, this will run on   http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Setting up the backend service locally
+ - Clone the initial repo I started working with at https://github.com/Amakoye/savannah-informatics-test.git
+ - Change directory into backend folder
+ - Setup docker if not installed and run ```docker compose up -d```. This is responsible for starting our database service. I am using a postgress database with postgres docker image. -d flag makes the service run in detachable mode
+ - Create a python environment using ```python3 -m venv env```
+ - Activate the environment using ```source /env/bin/activate```
+ - Install project dependecince using ```pip install -r requirements.txt```
+ - Run migrations using ```python manage.py makemigrations && python manage.py migrate```
+ - Start the server using ```python manage.py runserver```
